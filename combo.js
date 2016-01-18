@@ -9,7 +9,7 @@ const uglify = require('uglify-js');
 const File = require('./lib/file');
 const iconv = require('iconv-lite');
 
-event.on("fileError",(msg) => console.log(msg));
+event.on("fileError",(res,msg) => res.end(msg));
 module.exports = (url,res) => {
 	let util = new utils(),
 		fileArr = [];
@@ -37,7 +37,7 @@ module.exports = (url,res) => {
 						res.end(str);
 					})
 				}else{
-					event.emit("fileError","the file is not exist");
+					event.emit("fileError",res,"the file is not exist");
 				}	
 			})
 		}else{
