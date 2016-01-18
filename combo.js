@@ -34,14 +34,14 @@ module.exports = (url,res) => {
 					},function(){
 						let str = iconv.decode(buf,'utf8');
 						str = uglify.minify(str,{fromString: true}).code;
-						res.end(str);
+						
 					})
 				}else{
 					event.emit("fileError","the file is not exist");
 				}	
 			})
 		}else{
-			
+			res.end(files);
 		}
 	});
 }
