@@ -13,28 +13,28 @@ event.on("fileError",(msg) => console.log(msg));
 module.exports = (url,res) => {
 	let util = new utils(),
 		fileArr = [];
-	util.parseUrl(url,function(files){
+	util.parseUrl(url,(files,suffix,search) => {
 		if(util.getType(files) === 'array'){
-			File.exist(files).then(function(data){
+			File.exist(files).then(data => {
 				if(data){
 					let chunks = [],
 						size = 0,
 						buf,
 						str;
-					util.each(data,function(i,file,go){
+					util.each(data,(i,file,go) => {
 						let rs  = fs.createReadStream(file);
-						rs.on("data",function(chunk){
+						rs.on("data",chunk => {
 							chunks.push(chunk);
 							size += chunk.length
 						})
-						rs.on("end",function(){
+						rs.on("end",() => {
 							buf = Buffer.concat(chunks,size);
 							go();
 						})
-					},function(){
+					},() => {
 						let str = iconv.decode(buf,'utf8');
 						str = uglify.minify(str,{fromString: true}).code;
-						
+						res.end(str);
 					})
 				}else{
 					event.emit("fileError","the file is not exist");
