@@ -32,11 +32,12 @@ module.exports = (url,res) => {
 							})
 							rs.on("end",() => {
 								buf = Buffer.concat(chunks,size);
-								str = iconv.decode(buf,'utf8');
+								go();
 							})
 						},() => {
-							/*str = uglify.minify(str,{fromString: true}).code;
-							res.end(str);*/
+							str = iconv.decode(buf,'utf8');
+							str = uglify.minify(str,{fromString: true}).code;
+							res.end(str);
 						})
 					}else{
 						event.emit("fileError",res,"the file is not exist");
