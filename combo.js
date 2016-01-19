@@ -2,12 +2,12 @@
 'use strict';
 
 const es6 = require('es6-shim');
-const utils = require('./lib/util').Utils;
-const event = require('./lib/util').event;
 const fs = require('fs');
 const uglify = require('uglify-js');
-const File = require('./lib/file');
 const iconv = require('iconv-lite');
+const utils = require('./lib/util').Utils;
+const event = require('./lib/util').event;
+const File = require('./lib/file');
 
 event.on("fileError",(res,msg) => res.end(msg));
 
