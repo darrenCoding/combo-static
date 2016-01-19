@@ -13,6 +13,7 @@
   "dependencies": {
     "browserify": "^13.0.0",
     "combined-stream": "^1.0.5",
+    "csswring": "^4.2.1",
     "es6-shim": "^0.34.1",
     "iconv-lite": "^0.4.13",
     "log4js": "^0.6.29",

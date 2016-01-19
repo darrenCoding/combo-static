@@ -4,6 +4,7 @@
 const es6 = require('es6-shim');
 const fs = require('fs');
 const uglify = require('uglify-js');
+const csswring = require("csswring");
 const iconv = require('iconv-lite');
 const utils = require('./lib/util').Utils;
 const event = require('./lib/util').event;
@@ -36,8 +37,7 @@ module.exports = (url,res) => {
 							})
 						},() => {
 							str = iconv.decode(buf,'utf8');
-							str = uglify.minify(str,{fromString: true}).code;
-							res.end(str);
+							compress(true,suffix,str)
 						})
 					}else{
 						event.emit("fileError",res,"the file is not exist");
@@ -50,6 +50,13 @@ module.exports = (url,res) => {
 			res.end(files);
 		}
 	});
+
+	function compress(ispress,cate,content){
+		if(ispress){
+			content = (cate === 'js') ? uglify.minify(content,{fromString: true}).code : csswring.wring(content).css;
+		}
+		return res.end(content);
+	}
 }
 	
 
