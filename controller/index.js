@@ -3,7 +3,8 @@
 
 let filetype = {
 	'js r' : require('./js/amd'),
-	'js c' : require('./js/common')
+	'js c' : require('./js/common'),
+	'css l' : require('./css/less'),
 }
 
 let optFile = (files,suffix,search) => {

@@ -16,40 +16,52 @@ event.on("fileError",(res,msg) => res.end(msg));
 module.exports = (url,res) => {
 	let util = new utils(),
 		fileArr = [];
-	util.parseUrl(url,(files,suffix,search) => {
+	util.parseUrl(url,(files,suffix,search,isStr) => {
 		if(util.getType(files) === 'array'){
 			if(!search){
-				File.exist(files).then(data => {
-					if(data){
-						let chunks = [],
-							size = 0,
-							buf,
-							str;
-						util.each(data,(i,file,go) => {
-							let rs  = fs.createReadStream(file);
-							rs.on("data",chunk => {
-								chunks.push(chunk);
-								size += chunk.length
-							})
-							rs.on("end",() => {
-								buf = Buffer.concat(chunks,size);
-								go();
-							})
-						},() => {
-							str = iconv.decode(buf,'utf8');
-							compress(true,suffix,str)
-						})
-					}else{
-						event.emit("fileError",res,"the file is not exist");
-					}	
-				})
+				combineFile(files,function(data){
+					compress(true,suffix,data)
+				})					
 			}else{
-				compile(files,suffix,search);
+				if(!isStr){
+					compile(files,suffix,search);
+				}else{
+					combineFile(files,function(data){
+						compile(data,suffix,search);
+					})
+				}
 			}
 		}else{
 			res.end(files);
 		}
 	});
+
+	function combineFile(files,callback){
+		File.exist(files).then(data => {
+			if(data){
+				let chunks = [],
+					size = 0,
+					buf,
+					str;
+				util.each(data,(i,file,go) => {
+					let rs  = fs.createReadStream(file);
+					rs.on("data",chunk => {
+						chunks.push(chunk);
+						size += chunk.length
+					})
+					rs.on("end",() => {
+						buf = Buffer.concat(chunks,size);
+						go();
+					})
+				},() => {
+					str = iconv.decode(buf,'utf8');
+					callback && callback(str);
+				})
+			}else{
+				event.emit("fileError",res,"the file is not exist");
+			}	
+		})
+	}
 
 	function compress(ispress,cate,content){
 		if(ispress){
