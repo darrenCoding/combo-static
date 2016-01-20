@@ -4,6 +4,7 @@
 const event = require('../../lib/util').event;
 const config = require('../../config/index').js_module.AMD;
 const base_path = require('../../config/index').base_path;
+const log4js = require('../../config/log');
 const requirejs = require('../../deps/r2.js');
 
 class Amd{
@@ -21,9 +22,9 @@ class Amd{
 	}
 
 	handleJs(){
-		requirejs.optimize(this.r_config, buildResponse => {
-            console.log(buildResponse);
+		requirejs.optimize(this.r_config, (buildResponse) => {
         }, err => {
+        	log4js.logger_e.error(err.message || err.stack);
             event.emit("fileResult",this.fn,err)
         });
 	}

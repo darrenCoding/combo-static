@@ -15,10 +15,10 @@ const compile = require('./controller/');
 let compress = (ispress,cate,content,cb) => {
 	if(ispress){
 		try{
-			log4js.logger_c.info("compress time");
 			content = (cate === 'js') ? uglify.minify(content,{fromString: true}).code : csswring.wring(content).css;
 			return cb && cb(null,content);
 		}catch(e){
+			log4js.logger_e.error(e.message || e.stack);
 			return cb && cb(e)
 		}
 	}else{
@@ -70,6 +70,7 @@ module.exports = (url,fn) => {
 					if(!err){
 						fn && compress(true,suffix,data,fn)
 					}else{
+						log4js.logger_e.error(err.message || err.stack);
 						event.emit("fileResult",fn,err);
 					}
 				})					
@@ -81,6 +82,7 @@ module.exports = (url,fn) => {
 						if(!err){
 							compile(data,suffix,search,fn);
 						}else{
+							log4js.logger_e.error(err.message || err.stack);
 							event.emit("fileResult",fn,err);
 						}
 					})

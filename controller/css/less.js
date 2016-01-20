@@ -1,8 +1,9 @@
 
 'use strict';
 
-const event = require('../../lib/util').event;
 const less = require('less');
+const event = require('../../lib/util').event;
+const log4js = require('../../config/log');
 
 class Less{
 	constructor(data,suffix,fn){
@@ -18,6 +19,7 @@ class Less{
 	    	if(!err){
 	    		event.emit("compileData",this.fn,this.suffix,output.css)
 	    	}else{
+	    		log4js.logger_e.error(err.message || err.stack);
 	    		event.emit("fileResult",this.fn,err)
 	    	}
 	    });

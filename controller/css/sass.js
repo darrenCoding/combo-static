@@ -1,9 +1,10 @@
 
 'use strict';
 
-const event = require('../../lib/util').event;
 const sass = require('node-sass');
 const iconv = require('iconv-lite');
+const event = require('../../lib/util').event;
+const log4js = require('../../config/log');
 
 class Sass{
 	constructor(data,suffix,fn){
@@ -21,6 +22,7 @@ class Sass{
 					event.emit("compileData",this.fn,this.suffix,iconv.decode(result.css,'utf8'))
 				}
 			}else{
+				log4js.logger_e.error(err.message || err.stack);
 				event.emit("fileResult",this.fn,err);
 			}
 		});
