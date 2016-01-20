@@ -1,6 +1,7 @@
 
 'use strict';
 
+const event = require('../../lib/util').event;
 const less = require('less');
 
 class Less{
@@ -19,7 +20,7 @@ class Less{
 	    	}else{
 	    		event.emit("fileResult",this.fn,err)
 	    	}
-	    }.bind(this));
+	    });
 	}
 }
 

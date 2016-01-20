@@ -24,6 +24,7 @@ let compress = (ispress,cate,content,cb) => {
 }
 
 let combineFile = (files,callback) => {
+	let util = new utils();
 	File.exist(files).then(data => {
 		if(data){
 			let chunks = [],
@@ -45,7 +46,7 @@ let combineFile = (files,callback) => {
 				callback && callback(null,str);
 			})
 		}else{
-			event.emit("fileResult","the file is not exist");
+			callback && callback("the file is not exist");
 		}	
 	})
 }
@@ -62,8 +63,12 @@ module.exports = (url,fn) => {
 	util.parseUrl(url,(files,suffix,search,isStr) => {
 		if(util.getType(files) === 'array'){
 			if(!search){
-				combineFile(files,function(data){
-					fn && compress(true,suffix,data,fn)
+				combineFile(files,function(err,data){
+					if(!err){
+						fn && compress(true,suffix,data,fn)
+					}else{
+						event.emit("fileResult",fn,err);
+					}
 				})					
 			}else{
 				if(!isStr){
@@ -73,7 +78,7 @@ module.exports = (url,fn) => {
 						if(!err){
 							compile(data,suffix,search,fn);
 						}else{
-							event.emit("fileResult",fn,files);
+							event.emit("fileResult",fn,err);
 						}
 					})
 				}

@@ -1,6 +1,7 @@
 
 'use strict';
 
+const event = require('../../lib/util').event;
 const browserify = require('browserify');
 const iconv = require('iconv-lite');
 
@@ -12,7 +13,7 @@ class Common{
 	}
 
 	handleJs(files){
-		var b_instance= browserify(files);
+		var r_instance= browserify(files);
 		r_instance.bundle( (err,buf) => {
 			if(!err){
 				if(Buffer.isBuffer(buf)){
@@ -21,7 +22,7 @@ class Common{
 			}else{
 				event.emit("fileResult",this.fn,err)
 			}
-		}.bind(this))
+		})
 	}
 }
 

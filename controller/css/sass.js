@@ -1,6 +1,7 @@
 
 'use strict';
 
+const event = require('../../lib/util').event;
 const sass = require('node-sass');
 const iconv = require('iconv-lite');
 
@@ -22,7 +23,7 @@ class Sass{
 			}else{
 				event.emit("fileResult",this.fn,err);
 			}
-		}.bind(this));
+		});
 	}
 }
 

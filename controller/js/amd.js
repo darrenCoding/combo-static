@@ -15,7 +15,7 @@ class Amd{
 		this.suffix = suffix;
 		this.r_config = {};
 		this.r_config.include = file;
-		this.r_config.out = this.out;
+		this.r_config.out = this.out.bind(this);
 		Object.assign(this.r_config,config);
 		this.handleJs();
 	}
@@ -25,7 +25,7 @@ class Amd{
             
         }, e => {
             event.emit("fileResult",this.fn,e)
-        }.bind(this));
+        });
 	}
 
 	out(data){
