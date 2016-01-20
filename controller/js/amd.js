@@ -23,8 +23,8 @@ class Amd{
 	handleJs(){
 		requirejs.optimize(this.r_config, buildResponse => {
             
-        }, e => {
-            event.emit("fileResult",this.fn,e)
+        }, err => {
+            event.emit("fileResult",this.fn,err)
         });
 	}
 
