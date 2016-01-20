@@ -15,10 +15,6 @@ class Less{
 	       console.log(output.css);
 	    });
 	}
-
-	out(data){
-		console.log(data);
-	}
 }
 
 module.exports = Less;
