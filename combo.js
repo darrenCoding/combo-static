@@ -11,64 +11,77 @@ const event = require('./lib/util').event;
 const File = require('./lib/file');
 const compile = require('./controller/');
 
-event.on("fileError",(res,msg) => res.end(msg));
+let compress = (ispress,cate,content,cb) => {
+	if(ispress){
+		try{
+			content = (cate === 'js') ? uglify.minify(content,{fromString: true}).code : csswring.wring(content).css;
+			return cb && cb(null,content);
+		}catch(e){
+			return cb && cb(e)
+		}
+	}
+	
+}
 
-module.exports = (url,res) => {
+let combineFile = (files,callback) => {
+	File.exist(files).then(data => {
+		if(data){
+			let chunks = [],
+				size = 0,
+				buf,
+				str;
+			util.each(data,(i,file,go) => {
+				let rs  = fs.createReadStream(file);
+				rs.on("data",chunk => {
+					chunks.push(chunk);
+					size += chunk.length
+				})
+				rs.on("end",() => {
+					buf = Buffer.concat(chunks,size);
+					go();
+				})
+			},() => {
+				str = iconv.decode(buf,'utf8');
+				callback && callback(null,str);
+			})
+		}else{
+			event.emit("fileResult","the file is not exist");
+		}	
+	})
+}
+
+event.on("fileResult",(fn,err,data) => fn(err,data));
+
+event.on("compileData",(fn,suffix,data) => {
+	compress(true,suffix,data,fn)
+});
+
+module.exports = (url,fn) => {
 	let util = new utils(),
 		fileArr = [];
 	util.parseUrl(url,(files,suffix,search,isStr) => {
 		if(util.getType(files) === 'array'){
 			if(!search){
 				combineFile(files,function(data){
-					compress(true,suffix,data)
+					fn && compress(true,suffix,data,fn)
 				})					
 			}else{
 				if(!isStr){
-					compile(files,suffix,search);
+					compile(files,suffix,search,fn);
 				}else{
-					combineFile(files,function(data){
-						compile(data,suffix,search);
+					combineFile(files,function(err,data){
+						if(!err){
+							compile(data,suffix,search,fn);
+						}else{
+							event.emit("fileResult",fn,files);
+						}
 					})
 				}
 			}
 		}else{
-			res.end(files);
+			event.emit("fileResult",fn,files)
 		}
 	});
-
-	function combineFile(files,callback){
-		File.exist(files).then(data => {
-			if(data){
-				let chunks = [],
-					size = 0,
-					buf,
-					str;
-				util.each(data,(i,file,go) => {
-					let rs  = fs.createReadStream(file);
-					rs.on("data",chunk => {
-						chunks.push(chunk);
-						size += chunk.length
-					})
-					rs.on("end",() => {
-						buf = Buffer.concat(chunks,size);
-						go();
-					})
-				},() => {
-					str = iconv.decode(buf,'utf8');
-					callback && callback(str);
-				})
-			}else{
-				event.emit("fileError",res,"the file is not exist");
-			}	
-		})
-	}
-
-	function compress(ispress,cate,content){
-		if(ispress){
-			content = (cate === 'js') ? uglify.minify(content,{fromString: true}).code : csswring.wring(content).css;
-		}
-		return res.end(content);
-	}
 }
 	
 

@@ -1,15 +1,18 @@
 
 'use strict';
 
+const event = require('../../lib/util').event;
 const config = require('../../config/index').js_module.AMD;
 const base_path = require('../../config/index').base_path;
 const requirejs = require('../../deps/r2.js');
 
 class Amd{
-	constructor(files){
+	constructor(files,suffix,fn){
 		let file = files.map(item => {
 			return item.replace(".js","").replace(base_path,"");
 		})
+		this.fn = fn;
+		this.suffix = suffix;
 		this.r_config = {};
 		this.r_config.include = file;
 		this.r_config.out = this.out;
@@ -21,12 +24,12 @@ class Amd{
 		requirejs.optimize(this.r_config, buildResponse => {
             
         }, e => {
-            console.log(e.toString())
-        });
+            event.emit("fileResult",this.fn,e)
+        }.bind(this));
 	}
 
 	out(data){
-		console.log(data);
+		event.emit("compileData",this.fn,this.suffix,data)
 	}
 }
 

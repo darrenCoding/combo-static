@@ -4,16 +4,22 @@
 const less = require('less');
 
 class Less{
-	constructor(data){
+	constructor(data,suffix,fn){
+		this.fn = fn;
+		this.suffix = suffix;
 		this.handleJs(data);
 	}
 
 	handleJs(data){
 		less.render(data,{
 	      compress: false 
-	    },function (e, output) {
-	       console.log(output.css);
-	    });
+	    },(err, output) => {
+	    	if(!err){
+	    		event.emit("compileData",this.fn,this.suffix,output.css)
+	    	}else{
+	    		event.emit("fileResult",this.fn,err)
+	    	}
+	    }.bind(this));
 	}
 }
 

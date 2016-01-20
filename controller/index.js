@@ -8,8 +8,8 @@ let filetype = {
 	'css s' : require('./css/sass')
 }
 
-let optFile = (files,suffix,search) => {
-	return new filetype[suffix + " " + search](files)
+let optFile = (files,suffix,search,fn) => {
+	return new filetype[suffix + " " + search](files,suffix,fn)
 }
 
 module.exports = optFile
