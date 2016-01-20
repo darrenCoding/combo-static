@@ -8,19 +8,22 @@ const csswring = require("csswring");
 const iconv = require('iconv-lite');
 const utils = require('./lib/util').Utils;
 const event = require('./lib/util').event;
+const log4js = require('./config/log');
 const File = require('./lib/file');
 const compile = require('./controller/');
 
 let compress = (ispress,cate,content,cb) => {
 	if(ispress){
 		try{
+			log4js.logger_c.info("compress time");
 			content = (cate === 'js') ? uglify.minify(content,{fromString: true}).code : csswring.wring(content).css;
 			return cb && cb(null,content);
 		}catch(e){
 			return cb && cb(e)
 		}
+	}else{
+		return cb && cb(null,content);
 	}
-	
 }
 
 let combineFile = (files,callback) => {
