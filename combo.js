@@ -56,9 +56,7 @@ let combineFile = (files,callback) => {
 
 event.on("fileResult",(fn,err,data) => fn(err,data));
 
-event.on("compileData",(fn,suffix,data) => {
-	compress(true,suffix,data,fn)
-});
+event.on("compileData",(fn,suffix,data) => compress(true,suffix,data,fn));
 
 module.exports = (url,fn) => {
 	let util = new utils(),

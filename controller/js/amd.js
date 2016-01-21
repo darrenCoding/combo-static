@@ -10,7 +10,7 @@ const requirejs = require('../../deps/r2.js');
 class Amd{
 	constructor(files,suffix,fn){
 		let file = files.map(item => {
-			return item.replace(".js","").replace(base_path,"");
+			return item.replace(new RegExp(base_path),'');
 		})
 		this.fn = fn;
 		this.suffix = suffix;
