@@ -2,13 +2,16 @@
   "name": "leju-combo",
   "version": "1.0.0",
   "description": "a static combo server",
-  "main": "test.js",
-  "scripts": {},
+  "main": "combo.js",
+  "repository" : "https://github.com/darrenCoding/combo-static",
   "keywords": [
     "static",
     "combo"
   ],
-  "author": "darren",
+  "engines": {
+    "node": "5.2.0"
+  },
+  "author": "linfang",
   "license": "ISC",
   "dependencies": {
     "browserify": "^13.0.0",
