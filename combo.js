@@ -12,6 +12,10 @@ const log4js = require('./config/log');
 const File = require('./lib/file');
 const compile = require('./controller/');
 
+global.defaultConfig = {};
+
+let util = new utils();
+
 let compress = (ispress,cate,content,cb) => {
 	if(ispress){
 		try{
@@ -27,7 +31,6 @@ let compress = (ispress,cate,content,cb) => {
 }
 
 let combineFile = (files,callback) => {
-	let util = new utils();
 	File.exist(files).then(data => {
 		if(data){
 			let chunks = [],
@@ -58,9 +61,8 @@ event.on("fileResult",(fn,err,data) => fn(err,data));
 
 event.on("compileData",(fn,suffix,data) => compress(true,suffix,data,fn));
 
-module.exports = (url,fn) => {
-	let util = new utils(),
-		fileArr = [];
+let combo = module.exports = (url,fn) => {
+	let fileArr = [];
 	util.parseUrl(url,(files,suffix,search,isStr) => {
 		if(util.getType(files) === 'array'){
 			if(!search){
@@ -92,4 +94,6 @@ module.exports = (url,fn) => {
 	});
 }
 	
-
+combo.config = (options) => {
+	defaultConfig = options;
+}
