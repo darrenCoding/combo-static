@@ -6,13 +6,14 @@ const fs = require('fs');
 const uglify = require('uglify-js');
 const csswring = require("csswring");
 const iconv = require('iconv-lite');
+const config = require('./config');
 const utils = require('./lib/util').Utils;
 const event = require('./lib/util').event;
 const log4js = require('./config/log');
 const File = require('./lib/file');
 const compile = require('./controller/');
 
-global.defaultConfig = {};
+global.lastConfig = {};
 
 let util = new utils();
 
@@ -95,5 +96,5 @@ let combo = module.exports = (url,fn) => {
 }
 	
 combo.config = (options) => {
-	defaultConfig = options;
+	lastConfig = Object.assign(config,options);;
 }
