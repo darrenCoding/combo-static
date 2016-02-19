@@ -13,7 +13,7 @@ const log4js = require('./config/log');
 const File = require('./lib/file');
 const compile = require('./controller/');
 
-global.lastConfig = {};
+global.lastConfig = config;
 
 let util = new utils();
 
