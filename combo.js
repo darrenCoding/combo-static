@@ -69,7 +69,7 @@ let combo = module.exports = (url,fn) => {
 			if(!search){
 				combineFile(files,function(err,data){
 					if(!err){
-						fn && compress(true,suffix,data,fn)
+						fn && compress(true,suffix,data,files,fn)
 					}else{
 						log4js.logger_e.error(err.message || err.stack);
 						event.emit("fileResult",fn,err);

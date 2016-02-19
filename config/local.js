@@ -18,10 +18,18 @@ module.exports = {
 		    "name": 'requireLib',
 		    "skipModuleInsertion": true,
 		}, 
-		"COMMONJS" : "c"//commonjs规范的参数设置
+		"COMMONJS" : { //commonjs规范的参数设置
+			"param" : "c"
+		}
 	},
 	"css_module" : {
-		"less" : "l", //less编译的参数设置
-		"sass" : "s" //sass编译的参数设置
+		"less" : { //less编译的参数设置
+			"param" : "l",
+			"paths" : ["/Users/linfang/Documents/leju/leju-combo/asset/css"]
+		},
+		"sass" : { //sass编译的参数设置
+			"param" : "s",
+			"includePaths" : ["/Users/linfang/Documents/leju/leju-combo/asset/css"]
+		} 
 	}
 }

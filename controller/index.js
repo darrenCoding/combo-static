@@ -1,15 +1,21 @@
 
 'use strict';
 
-let filetype = {
-	'js r' : require('./js/amd'),
-	'js c' : require('./js/common'),
-	'css l' : require('./css/less'),
-	'css s' : require('./css/sass')
-}
+const config = require('../config');
+const amdp = "js " + config.js_module.AMD.param;
+const commonp = "js " + config.js_module.COMMONJS.param;
+const lessp = "css " + config.css_module.less.param;
+const sassp = "css " + config.css_module.sass.param;
+
+let map  = new Map();
+map.set(amdp,require('./js/amd'));
+map.set(commonp,require('./js/common'));
+map.set(lessp,require('./css/less'));
+map.set(sassp,require('./css/sass'));
 
 let optFile = (data,suffix,search,fn,fileArr) => {
-	return new filetype[suffix + " " + search](data,suffix,fn,fileArr);
+	let func = map.get(suffix + " " + search);
+	return new func(data,suffix,fn,fileArr);
 }
 
 module.exports = optFile
