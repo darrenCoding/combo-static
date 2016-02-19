@@ -17,17 +17,17 @@ global.lastConfig = config;
 
 let util = new utils();
 
-let compress = (ispress,cate,content,cb) => {
+let compress = (ispress,cate,content,deps,cb) => {	
 	if(ispress){
 		try{
 			content = (cate === 'js') ? uglify.minify(content,{fromString: true}).code : csswring.wring(content).css;
-			return cb && cb(null,content);
+			return cb && cb(null,content,deps);
 		}catch(e){
 			log4js.logger_e.error(e.message || e.stack);
 			return cb && cb(e)
 		}
 	}else{
-		return cb && cb(null,content);
+		return cb && cb(null,content,deps);
 	}
 }
 
@@ -60,7 +60,7 @@ let combineFile = (files,callback) => {
 
 event.on("fileResult",(fn,err,data) => fn(err,data));
 
-event.on("compileData",(fn,suffix,data) => compress(true,suffix,data,fn));
+event.on("compileData",(fn,suffix,data,deps) => compress(true,suffix,data,deps,fn));
 
 let combo = module.exports = (url,fn) => {
 	let fileArr = [];
@@ -81,7 +81,7 @@ let combo = module.exports = (url,fn) => {
 				}else{
 					combineFile(files,function(err,data){
 						if(!err){
-							compile(data,suffix,search,fn);
+							compile(data,suffix,search,fn,files);
 						}else{
 							log4js.logger_e.error(err.message || err.stack);
 							event.emit("fileResult",fn,err);

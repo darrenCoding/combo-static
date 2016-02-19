@@ -6,16 +6,19 @@ const event = require('../../lib/util').event;
 const log4js = require('../../config/log');
 
 class Less{
-	constructor(data,suffix,fn){
+	constructor(data,suffix,fn,fileArr){
 		this.fn = fn;
+		this.fileArr = fileArr;
 		this.suffix = suffix;
 		this.handleJs(data);
 	}
 
 	handleJs(data){
 		less.render(data,{
-	      compress: false 
+		  paths : ["/Users/linfang/Documents/leju/leju-combo/asset/css"],
+	      compress: false
 	    },(err, output) => {
+	    	this.fileArr.push.apply(this.fileArr,output.imports);
 	    	if(!err){
 	    		event.emit("compileData",this.fn,this.suffix,output.css)
 	    	}else{

@@ -10,6 +10,7 @@ class Common{
 	constructor(files,suffix,fn){
 		this.fn = fn;
 		this.suffix = suffix;
+		this.depFiles = [];
 		this.handleJs(files)
 	}
 
@@ -18,13 +19,17 @@ class Common{
 		r_instance.bundle( (err,buf) => {
 			if(!err){
 				if(Buffer.isBuffer(buf)){
-					event.emit("compileData",this.fn,this.suffix,iconv.decode(buf,'utf8'))
+					event.emit("compileData",this.fn,this.suffix,iconv.decode(buf,'utf8'),this.depFiles)
 				}
 			}else{
 				log4js.logger_e.error(err.message || err.stack);
 				event.emit("fileResult",this.fn,err)
 			}
 		})
+
+		r_instance.on("file",function(file,id,parent){
+			this.depFiles.push(file);
+		}.bind(this))
 	}
 }
 

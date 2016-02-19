@@ -15,8 +15,10 @@ class Amd{
 		this.fn = fn;
 		this.suffix = suffix;
 		this.r_config = {};
+		this.depFiles = [];
 		this.r_config.include = file;
 		this.r_config.out = this.out.bind(this);
+		this.r_config.onBuildWrite = this.onBuildWrite.bind(this);
 		Object.assign(this.r_config,config);
 		this.handleJs();
 	}
@@ -30,7 +32,13 @@ class Amd{
 	}
 
 	out(data){
-		event.emit("compileData",this.fn,this.suffix,data)
+		this.depFiles.shift();
+		event.emit("compileData",this.fn,this.suffix,data,this.depFiles)
+	}
+
+	onBuildWrite(moduleName, path, contents){
+		this.depFiles.push(path.replace(/^\.\//, ''));
+		return contents;
 	}
 }
 
