@@ -6,7 +6,7 @@ const fs = require('fs');
 const uglify = require('uglify-js');
 const csswring = require("csswring");
 const iconv = require('iconv-lite');
-global.lastConfig = require('./config');
+const config = global.lastConfig = require('./config');
 const utils = require('./lib/util').Utils;
 const event = require('./lib/util').event;
 const log4js = require('./config/log');
