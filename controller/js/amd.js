@@ -2,14 +2,13 @@
 'use strict';
 
 const event = require('../../lib/util').event;
-const base_path = require('../../config/index').base_path;
 const log4js = require('../../config/log');
 const requirejs = require('../../deps/r2.js');
 
 class Amd{
 	constructor(files,suffix,fn){
 		let file = files.map(item => {
-			return item.replace(new RegExp(base_path),'');
+			return item.replace(new RegExp(lastConfig.base_path),'');
 		})
 		this.fn = fn;
 		this.suffix = suffix;
