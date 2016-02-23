@@ -6,14 +6,12 @@ const fs = require('fs');
 const uglify = require('uglify-js');
 const csswring = require("csswring");
 const iconv = require('iconv-lite');
-const config = require('./config');
+global.lastConfig = require('./config');
 const utils = require('./lib/util').Utils;
 const event = require('./lib/util').event;
 const log4js = require('./config/log');
 const File = require('./lib/file');
 const compile = require('./controller/');
-
-global.lastConfig = config;
 
 let util = new utils();
 

@@ -17,12 +17,12 @@ class Sass{
 	handleJs(data){
 		sass.render({
 		  	data : data,
-		  	includePaths : ["/Users/linfang/Documents/leju/leju-combo/asset/css"]
+		  	includePaths : lastConfig.css_module.sass.includePaths
 		}, (err, result) => {
 			this.fileArr.push.apply(this.fileArr,result.stats.includedFiles);
 			if(!err){
 				if(Buffer.isBuffer(result.css)){
-					event.emit("compileData",this.fn,this.suffix,iconv.decode(result.css,'utf8'))
+					event.emit("compileData",this.fn,this.suffix,iconv.decode(result.css,'utf8'),this.fileArr)
 				}
 			}else{
 				log4js.logger_e.error(err.message || err.stack);

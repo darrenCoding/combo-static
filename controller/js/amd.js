@@ -2,7 +2,6 @@
 'use strict';
 
 const event = require('../../lib/util').event;
-const config = require('../../config/index').js_module.AMD;
 const base_path = require('../../config/index').base_path;
 const log4js = require('../../config/log');
 const requirejs = require('../../deps/r2.js');
@@ -19,7 +18,7 @@ class Amd{
 		this.r_config.include = file;
 		this.r_config.out = this.out.bind(this);
 		this.r_config.onBuildWrite = this.onBuildWrite.bind(this);
-		Object.assign(this.r_config,config);
+		Object.assign(this.r_config,lastConfig.js_module.AMD);
 		this.handleJs();
 	}
 

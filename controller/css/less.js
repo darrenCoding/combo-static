@@ -15,12 +15,12 @@ class Less{
 
 	handleJs(data){
 		less.render(data,{
-		  paths : ["/Users/linfang/Documents/leju/leju-combo/asset/css"],
+		  paths : lastConfig.css_module.less.paths,
 	      compress: false
 	    },(err, output) => {
 	    	this.fileArr.push.apply(this.fileArr,output.imports);
 	    	if(!err){
-	    		event.emit("compileData",this.fn,this.suffix,output.css)
+	    		event.emit("compileData",this.fn,this.suffix,output.css,this.fileArr)
 	    	}else{
 	    		log4js.logger_e.error(err.message || err.stack);
 	    		event.emit("fileResult",this.fn,err)
