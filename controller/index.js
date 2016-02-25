@@ -1,10 +1,10 @@
 
 'use strict';
 
-const amdp = "js " + lastConfig.js_module.AMD.param;
-const commonp = "js " + lastConfig.js_module.COMMONJS.param;
-const lessp = "css " + lastConfig.css_module.less.param;
-const sassp = "css " + lastConfig.css_module.sass.param;
+const amdp = "js " + lastConfig.params.AMD;
+const commonp = "js " + lastConfig.params.COMMONJS;
+const lessp = "css " + lastConfig.params.LESS;
+const sassp = "css " + lastConfig.params.SASS;
 
 let map  = new Map();
 map.set(amdp,require('./js/amd'));
