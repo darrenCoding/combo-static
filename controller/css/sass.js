@@ -17,7 +17,7 @@ class Sass{
 	handleJs(data){
 		sass.render({
 		  	data : data,
-		  	includePaths : lastConfig.css_module.sass.includePaths
+		  	includePaths : lastConfig.css_module.SASS.includePaths
 		}, (err, result) => {
 			this.fileArr.push.apply(this.fileArr,result.stats.includedFiles);
 			if(!err){

@@ -15,7 +15,7 @@ class Less{
 
 	handleJs(data){
 		less.render(data,{
-		  paths : lastConfig.css_module.less.paths,
+		  paths : lastConfig.css_module.LESS.paths,
 	      compress: false
 	    },(err, output) => {
 	    	this.fileArr.push.apply(this.fileArr,output.imports);
