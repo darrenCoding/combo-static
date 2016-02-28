@@ -9,6 +9,7 @@ module.exports = {
 		"LESS" : "l",
 		"SASS" : "s"
 	},
+	"compress" : false,
 	"base_path" : "/Users/linfang/Documents/leju/leju-combo/", //文件存放路径
 	"combo_dir" : "??", //跨目录文件分隔符
 	"combo_file" : ",", //同目录下文件分隔符

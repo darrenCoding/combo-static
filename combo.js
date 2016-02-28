@@ -58,7 +58,7 @@ let combineFile = (files,callback) => {
 
 event.on("fileResult",(fn,err,data) => fn(err,data));
 
-event.on("compileData",(fn,suffix,data,deps) => compress(true,suffix,data,deps,fn));
+event.on("compileData",(fn,suffix,data,deps) => compress(lastConfig.compress,suffix,data,deps,fn));
 
 let combo = module.exports = (url,fn) => {
 	let fileArr = [];
@@ -67,7 +67,7 @@ let combo = module.exports = (url,fn) => {
 			if(!search){
 				combineFile(files,function(err,data){
 					if(!err){
-						fn && compress(true,suffix,data,files,fn)
+						fn && compress(lastConfig.compress,suffix,data,files,fn)
 					}else{
 						log4js.logger_e.error(err.message || err.stack);
 						event.emit("fileResult",fn,err);
