@@ -1,7 +1,6 @@
 
 'use strict';
 
-const es6 = require('es6-shim');
 const fs = require('fs');
 const uglify = require('uglify-js');
 const csswring = require("csswring");
