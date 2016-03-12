@@ -5,6 +5,7 @@ const fs = require('fs');
 const uglify = require('uglify-js');
 const csswring = require("csswring");
 const iconv = require('iconv-lite');
+const debug = require('debug')('combo:main');
 const config = global.lastConfig = require('./config');
 const utils = require('./lib/util').Utils;
 const event = require('./lib/util').event;
@@ -17,6 +18,7 @@ let util = new utils();
 let compress = (ispress,cate,content,deps,cb) => {	
 	if(ispress){
 		try{
+			debug('compress %s', deps);
 			content = (cate === 'js') ? uglify.minify(content,{fromString: true}).code : csswring.wring(content).css;
 			return cb && cb(null,content,deps);
 		}catch(e){
@@ -46,6 +48,7 @@ let combineFile = (files,callback) => {
 					go();
 				})
 			},() => {
+				debug('combine files %s', files);
 				str = iconv.decode(buf,'utf8');
 				callback && callback(null,str);
 			})
