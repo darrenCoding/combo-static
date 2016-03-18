@@ -8,6 +8,9 @@
     "static",
     "combo"
   ],
+  "bin": {
+    "combo-push": "./bin/push.js"
+  },
   "engines": {
     "node": "5.2.0"
   },
@@ -22,6 +25,5 @@
     "node-sass": "^3.4.2",
     "debug": "^2.2.0",
     "uglify-js": "^2.6.1"
-  },
-
+  }
 }
