@@ -5,6 +5,7 @@ const fs = require('fs');
 const uglify = require('uglify-js');
 const csswring = require("csswring");
 const iconv = require('iconv-lite');
+const destroy = require('destroy');
 const debug = require('debug')('combo:main');
 const config = global.lastConfig = require('./config');
 const utils = require('./lib/util').Utils;
@@ -45,6 +46,7 @@ let combineFile = (files,callback) => {
 				})
 				rs.on("end",() => {
 					buf = Buffer.concat(chunks,size);
+					destroy(rs);
 					go();
 				})
 			},() => {
