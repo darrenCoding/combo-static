@@ -15,6 +15,7 @@ class Amd{
 		this.r_config = {};
 		this.depFiles = [];
 		this.r_config.include = file;
+		this.r_config.optimize = lastConfig.compress ? "uglify" : "none";
 		this.r_config.out = this.out.bind(this);
 		this.r_config.onBuildWrite = this.onBuildWrite.bind(this);
 		Object.assign(this.r_config,lastConfig.js_module.AMD);
@@ -25,7 +26,7 @@ class Amd{
 		requirejs.optimize(this.r_config, (buildResponse) => {
         }, err => {
         	log4js.logger_e.error(err.message || err.stack);
-            event.emit("fileResult",this.fn,err)
+            event.emit("fileResult",this.fn,err.message)
         });
 	}
 

@@ -66,9 +66,9 @@ event.on("compileData",(fn,suffix,data,deps) => compress(lastConfig.compress,suf
 
 let combo = module.exports = (url,fn) => {
 	let fileArr = [];
-	util.parseUrl(url,(files,suffix,search,isStr) => {
+	util.parseUrl(url,(files,suffix,search,isControl) => {
 		if(util.getType(files) === 'array'){
-			if(!search){
+			if(!isControl){
 				combineFile(files,function(err,data){
 					if(!err){
 						fn && compress(lastConfig.compress,suffix,data,files,fn)
@@ -78,7 +78,7 @@ let combo = module.exports = (url,fn) => {
 					}
 				})					
 			}else{
-				if(!isStr){
+				if(suffix === 'js'){
 					compile(files,suffix,search,fn);
 				}else{
 					combineFile(files,function(err,data){

@@ -1,9 +1,10 @@
 
 'use strict';
 
-const sass = require('node-sass');
-const iconv = require('iconv-lite');
-const event = require('../../lib/util').event;
+const iconv  = require('iconv-lite');
+const sass   = require('node-sass');
+const path   = require('path');
+const event  = require('../../lib/util').event;
 const log4js = require('../../config/log');
 
 class Sass{
@@ -17,16 +18,17 @@ class Sass{
 	handleJs(data){
 		sass.render({
 		  	data : data,
-		  	includePaths : lastConfig.css_module.SASS.includePaths
+		  	includePaths : [path.dirname(this.fileArr[0])],
+		  	outputStyle: lastConfig.compress ? 'compressed' : 'expanded'
 		}, (err, result) => {
-			this.fileArr.push.apply(this.fileArr,result.stats.includedFiles);
 			if(!err){
+				this.fileArr.push.apply(this.fileArr,result.stats.includedFiles);
 				if(Buffer.isBuffer(result.css)){
 					event.emit("compileData",this.fn,this.suffix,iconv.decode(result.css,'utf8'),this.fileArr)
 				}
 			}else{
 				log4js.logger_e.error(err.message || err.stack);
-				event.emit("fileResult",this.fn,err);
+				event.emit("fileResult",this.fn,err.message);
 			}
 		});
 	}

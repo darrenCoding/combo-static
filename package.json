@@ -1,6 +1,6 @@
 {
   "name": "static-combo",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "a static combo server",
   "main": "combo.js",
   "repository": "https://github.com/darrenCoding/combo-static",

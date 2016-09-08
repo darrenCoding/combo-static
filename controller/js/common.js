@@ -23,7 +23,7 @@ class Common{
 				}
 			}else{
 				log4js.logger_e.error(err.message || err.stack);
-				event.emit("fileResult",this.fn,err)
+				event.emit("fileResult",this.fn,err.message)
 			}
 		})
 
