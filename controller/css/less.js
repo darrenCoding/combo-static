@@ -4,7 +4,6 @@
 const less   = require('less');
 const path   = require('path');
 const event  = require('../../lib/util').event;
-const log4js = require('../../config/log');
 
 class Less{
 	constructor(data,suffix,fn,fileArr){

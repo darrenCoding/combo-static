@@ -2,7 +2,6 @@
 'use strict';
 
 const event = require('../../lib/util').event;
-const log4js = require('../../config/log');
 const requirejs = require('../../deps/r2.js');
 
 class Amd{

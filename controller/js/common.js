@@ -4,7 +4,6 @@
 const browserify = require('browserify');
 const iconv = require('iconv-lite');
 const event = require('../../lib/util').event;
-const log4js = require('../../config/log');
 
 class Common{
 	constructor(files,suffix,fn){

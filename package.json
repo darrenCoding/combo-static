@@ -1,6 +1,6 @@
 {
   "name": "static-combo",
-  "version": "1.0.8",
+  "version": "1.0.19",
   "description": "a static combo server",
   "main": "combo.js",
   "repository": "https://github.com/darrenCoding/combo-static",
@@ -21,6 +21,7 @@
     "csswring": "^4.2.1",
     "debug": "^2.2.0",
     "destroy": "^1.0.4",
+    "extend": "^3.0.0",
     "iconv-lite": "^0.4.13",
     "less": "^2.5.3",
     "log4js": "^0.6.29",

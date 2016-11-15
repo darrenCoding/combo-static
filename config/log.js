@@ -1,20 +1,27 @@
-var log4js = require('log4js');
+var log4js = require('log4js'),
+    logger_c = {
+      'info' : function(){}
+    },
+    logger_e = {
+      'error' : function(){}
+    };
 
-log4js.configure({
+if(lastConfig.log){
+  log4js.configure({
     appenders: [
       { 
-      	type: 'console' 
+        type: 'console' 
       },
       {
         type: 'file',
-        filename: 'out.log', 
+        filename: 'combo_out.log', 
         maxLogSize: 1048576,
         backups:3,
         category: 'normal' 
       },
       {
         type: 'file', 
-        filename: 'error.log', 
+        filename: 'combo_error.log', 
         maxLogSize: 1048576,
         backups:3,
         category: 'error' 
@@ -23,14 +30,14 @@ log4js.configure({
     replaceConsole: true
   },
   {
-      cwd : './Logs'
+    cwd : './Logs'
   }
 );
-
 var logger_c = log4js.getLogger('normal'),
-	 logger_e = log4js.getLogger('error');
+    logger_e = log4js.getLogger('error');
 logger_c.setLevel('INFO');
 logger_e.setLevel('ERROR');
+}
 
 module.exports = {
 	"logger_c" : logger_c,

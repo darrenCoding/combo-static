@@ -2,6 +2,7 @@
 'use strict';
 
 const fs = require('fs');
+const extend = require('extend');
 const uglify = require('uglify-js');
 const csswring = require("csswring");
 const iconv = require('iconv-lite');
@@ -10,7 +11,6 @@ const debug = require('debug')('combo:main');
 const config = global.lastConfig = require('./config');
 const utils = require('./lib/util').Utils;
 const event = require('./lib/util').event;
-const log4js = require('./config/log');
 const File = require('./lib/file');
 const compile = require('./controller/');
 
@@ -65,6 +65,7 @@ event.on("fileResult",(fn,err,data) => fn(err,data));
 event.on("compileData",(fn,suffix,data,deps) => compress(lastConfig.compress,suffix,data,deps,fn));
 
 let combo = module.exports = (url,fn) => {
+	global.log4js = require('./config/log');
 	let fileArr = [];
 	util.parseUrl(url,(files,suffix,search,isControl) => {
 		if(util.getType(files) === 'array'){
@@ -98,5 +99,6 @@ let combo = module.exports = (url,fn) => {
 }
 	
 combo.config = (options) => {
-	lastConfig = Object.assign(config,options);;
+	lastConfig = extend(true,config,options);
+	util.setConfig()
 }

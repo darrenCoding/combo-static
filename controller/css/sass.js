@@ -5,7 +5,6 @@ const iconv  = require('iconv-lite');
 const sass   = require('node-sass');
 const path   = require('path');
 const event  = require('../../lib/util').event;
-const log4js = require('../../config/log');
 
 class Sass{
 	constructor(data,suffix,fn,fileArr){
