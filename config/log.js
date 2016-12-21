@@ -44,7 +44,7 @@ if ( lastConfig.log ) {
         info () {}
     },
     loggerE = {
-        erro () {}
+        error () {}
     };
 }
 
