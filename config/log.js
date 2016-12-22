@@ -1,7 +1,7 @@
 
 'use strict';
 
-const log4js    = require('log4js');
+const log4js = require('log4js');
 
 let loggerC,
     loggerE;
@@ -50,8 +50,5 @@ if ( lastConfig.log ) {
 
 module.exports = {
     "loggerC" : loggerC,
-    "loggerE" : loggerE,
-    "logInfo" () {
-        return callsites()[0].getFileName() + ' ' + callsites()[0].getLineNumber()
-    }
+    "loggerE" : loggerE
 }

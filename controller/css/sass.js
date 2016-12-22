@@ -26,7 +26,7 @@ class Sass{
                     event.emit("compileData", this.fn, this.suffix, iconv.decode(result.css, 'utf8'), this.fileArr)
                 }
             } else {
-                event.emit("fileResult", this.fn, util.getFinfo() + String(err));
+                event.emit("globalError", this.fn, util.getFinfo() + String(err));
             }
         });
     }

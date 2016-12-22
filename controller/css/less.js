@@ -22,7 +22,7 @@ class Less{
             if ( !err ) {
                 event.emit("compileData", this.fn, this.suffix, output.css, this.fileArr)
             } else {
-                event.emit("fileResult", this.fn, util.getFinfo() + String(err))
+                event.emit("globalError", this.fn, util.getFinfo() + String(err))
             }
         });
     }
