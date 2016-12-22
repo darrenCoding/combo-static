@@ -21,7 +21,7 @@ class Common{
                     event.emit("compileData",this.fn, this.suffix, iconv.decode(buf, 'utf8'), this.depFiles)
                 }
             } else {
-                event.emit("globalError", util.getFinfo() + String(err))
+                event.emit("globalError", this.fn, util.getFinfo() + String(err))
             }
         })
 
