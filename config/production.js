@@ -21,7 +21,7 @@ module.exports = {
             "baseUrl": "./",
             "optimize": "none",
             "paths": {
-                "requireLib": process.cwd() + "/deps/minirequire"
+                "requireLib": path.resolve(__dirname,"../deps/minirequire")
             },
             "name": 'requireLib',
             "skipModuleInsertion": true,

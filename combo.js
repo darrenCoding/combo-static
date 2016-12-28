@@ -18,7 +18,14 @@ global.util = new utils();
 let compress = (ispress, cate, content, deps, cb) => {  
     if ( ispress ) {
         try{
-            content = (cate === 'js') ? uglify.minify(content,{fromString: true}).code : csswring.wring(content).css;
+            content = (cate === 'js') ? uglify.minify(content,
+                {
+                    fromString: true,
+                    output:{
+                        quote_keys : true
+                    }
+                }
+            ).code : csswring.wring(content).css;
             return cb && cb(null, content, deps);
         }catch(e){
             log4js.loggerE.error(util.getFinfo() + String(e));
