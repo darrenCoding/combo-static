@@ -1,5 +1,5 @@
 # combo-static
-解析comobo形式文件
+解析combo形式文件
 
 ## 安装
 ```
