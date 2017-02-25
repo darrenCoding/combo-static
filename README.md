@@ -33,7 +33,7 @@ combo.config({
     */
     log : false
     /**
-    * 文件所在跟目录
+    * 文件所在根目录
     */
     base_path : path.resolve(process.cwd(), 'dist'),
     /**
