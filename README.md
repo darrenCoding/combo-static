@@ -28,8 +28,14 @@ combo.config({
         "LESS" : "l", // http://cdn.leju.com/sso/app/dist/css/base.css?l -> 编译LESS
         "SASS" : "s" // http://cdn.leju.com/sso/app/dist/css/base.css?s -> 编译SASS
     },
-    log : false //是否输出日志
-    base_path : path.resolve(process.cwd(), 'static'), //文件所在目录,
+    /**
+    * 是否输出日志
+    */
+    log : false
+    /**
+    * 文件所在跟目录
+    */
+    base_path : path.resolve(process.cwd(), 'dist'),
     /**
     * 跨目录文件分隔符
     *
@@ -42,10 +48,19 @@ combo.config({
     * 例：http://cdn.leju.com/sso/app/dist/js/sso,index.js(?x)
     */
     combo_file : ",",
-    combo_format : ["js","css","scss","sass","less"], //支持合并功能的文件后缀名
-    compress : false, //是否开启压缩
+    /**
+    * 支持合并功能的文件后缀名
+    */
+    combo_format : ["js","css","scss","sass","less"],
+    /**
+    * 是否开启压缩
+    */
+    compress : false,
     js_module : {
-        AMD : { //配置AMD解析参数，具体配置信息请参考r.js
+        /**
+        * 配置AMD解析参数，具体配置信息请参考r.js
+        */
+        AMD : {
             baseUrl: path.resolve(process.cwd(), 'static'),
             paths: {
                 requireLib: path.resolve(__dirname,"../deps/minirequire")
@@ -57,7 +72,10 @@ combo.config({
                 dead_code : false
             }
         },
-        COMMONJS : { //COMMONJS配置，具体配置信息请参考browserify
+        /**
+        * COMMONJS配置，具体配置信息请参考browserify
+        */
+        COMMONJS : {
         }
     }
 })
@@ -68,7 +86,7 @@ let app = http.createServer(( req, res ) => {
         * err 错误信息
         * data 文件内容
         * deps 依赖文件列表
-        **/
+        */
         let code = 200;
         if ( err ) {
              code = 404;
