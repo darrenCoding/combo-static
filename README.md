@@ -2,7 +2,9 @@
 解析comobo形式文件
 
 ## 安装
+```
 (sudo) npm install static-combo -S
+```
 
 ## 版本
 node >= 5.2.0
